@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Perform code compilation and packaging using Maven"
+                echo "Perform code compilation and packaging with Maven"
             }
         }
         stage('Unit and Integration Tests') {
