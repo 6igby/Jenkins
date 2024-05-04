@@ -5,7 +5,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Perform code compilation and packaging with Maven"
-                git branch: 'main', url: 'https://github.com/6igby/Jenkins.git'
             }
         }
         stage('Unit and Integration Tests') {
