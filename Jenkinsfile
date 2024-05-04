@@ -2,6 +2,10 @@ pipeline {
     agent any
     
     stages {
+        stage('Email Jenkins Pipeline'){
+                mail bcc: '', body: 'Jenkins pipelin', cc: '', from: '', replyTo: '', subject: '', to: 'digby.hr@gmail.com'
+            }
+        }
         stage('Build') {
             steps {
                 echo "Perform code compilation and packaging with Maven"
