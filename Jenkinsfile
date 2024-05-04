@@ -11,16 +11,6 @@ pipeline {
             steps {
                 echo "Run unit tests and integration tests using JUnit and TestNG"
             }
-            post {
-                success {
-                    email notifyBody: 'Test stage succeeded', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    attachLog('test-logs.log')
-                }
-                failure {
-                    email notifyBody: 'Test stage failed', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    attachLog('test-logs.log')
-                }
-            }
         }
         stage('Code Analysis') {
             steps {
@@ -30,16 +20,6 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Perform security scan using OWASP ZAP"
-            }
-            post {
-                success {
-                    email notifyBody: 'Security scan stage succeeded', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    attachLog('security-scan-logs.log')
-                }
-                failure {
-                    email notifyBody: 'Security scan stage failed', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    attachLog('security-scan-logs.log')
-                }
             }
         }
         stage('Deploy to Staging') {
@@ -57,14 +37,10 @@ pipeline {
                 echo "Deploy application to production AWS EC2 instance using AWS CLI"
             }
         }
+        stage('Completed Build Email') {
+            steps {
+                mail bcc: '', body: 'Hello, This is an email from jenkins pipeline.', cc: '', from: '', replyTo: '', subject: 'EmailJenkinsPipeline', to: 'arr8ws@gmail.com'
+            }
+        }        
     }
-    post {
-        always {
-            email notifyBody: 'Pipeline completed', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-        }
-    }
-}
-
-def attachLog(logFile) {
-    emailext attachLog: true, logFile: logFile
 }
