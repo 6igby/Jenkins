@@ -1,9 +1,11 @@
 pipeline {
     agent any
+    
     stages {
         stage('Build') {
             steps {
                 echo "Perform code compilation and packaging with Maven"
+                git branch: 'main', url: 'https://github.com/6igby/Jenkins.git'
             }
         }
         stage('Unit and Integration Tests') {
@@ -36,20 +38,42 @@ pipeline {
             steps {
                 echo "Deploy application to production AWS EC2 instance using AWS CLI"
             }
-        post {
+        }
+    }
+    post {
             success {
-                emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Succeeded",
-                        body: 'Build was successful.',
-                        to: 'arr8ws@gmail.com',
-                        attachLog: true
+                script {
+                    def powershellCommand  """
+                    \$SMTPServer = "smtp.gmail.com"
+                    \$SMTPFrom = "arr8ws@gmail.com"
+                    \$SMTPTo = "arr8ws@gmail.com"
+                    \$SMTPSubject = "Succsessful Execusion of Build..."
+                    \$SMTPBody = "This build has been succsessful!"
+                    \$SMTPUsername = "arr8ws@gmail.com"
+                    \$SMTPPassword = "urca ldxr awox kyzo"
+                    Send-MailMessage -From \$SMTPFROM -to \$SMTPTo -Subject \$SMTPSubject -Body \$SMTPBody -SmtpServer \$SMTPServer
+                    """
+                    powershell(powershellCommand)
+                }
+
+                echo 'Succsess'
             }
             failure {
-                emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
-                        body: 'Build has failed.',
-                        to: 'arr8ws@gmail.com',
-                        attachLog: true
+                script{
+                    def powershellCommand  """
+                    \$SMTPServer = "smtp.gmail.com"
+                    \$SMTPFrom = "arr8ws@gmail.com"
+                    \$SMTPTo = "arr8ws@gmail.com"
+                    \$SMTPSubject = "Succsessful Execusion of Build..."
+                    \$SMTPBody = "This build has been succsessful!"
+                    \$SMTPUsername = "arr8ws@gmail.com"
+                    \$SMTPPassword = "urca ldxr awox kyzo"
+                    Send-MailMessage -From \$SMTPFROM -to \$SMTPTo -Subject \$SMTPSubject -Body \$SMTPBody -SmtpServer \$SMTPServer
+                    """
+                    powershell(powershellCommand)
                 }
+
+                echo 'Failed'
             }
-        }
     }
 }
