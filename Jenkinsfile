@@ -2,7 +2,8 @@ pipeline {
     agent any
     
     stages {
-        stage('Email Jenkins Pipeline'){
+        stage('Email Jenkins Pipeline')
+            steps{
                 mail bcc: '', body: 'Jenkins pipelin', cc: '', from: '', replyTo: '', subject: '', to: 'digby.hr@gmail.com'
             }
         }
