@@ -7,7 +7,7 @@ pipeline {
                 echo "Perform code compilation and packaging using Maven"
             }
         }
-        stage('Unit n Integration Tests') {
+        stage('Unit and Integration Tests') {
             steps {
                 echo "Run unit tests and integration tests using JUnit and TestNG"
             }
