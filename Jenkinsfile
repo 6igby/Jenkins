@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo "Perform security scan using OWASP ZAP"
                 archiveArtifacts artifacts: 'logs/**/*.log', onlyIfSuccessful: true
-                mail bcc: '', body: 'The Security Scan has been Succsessfully Completed.', cc: '', from: '', replyTo: '', subject: 'Security Test Complete', to: 'arr8ws@gmail.com', attachmentsPattern: 'logs/**/*.log'
+                mail bcc: '', body: 'The Security Scan has been Succsessfully Completed.', cc: '', from: '', replyTo: '', subject: 'Security Test Complete', to: 'arr8ws@gmail.com', attachments: 'logs/**/*.log'
             }
         }
         stage('Deploy to Staging') {
