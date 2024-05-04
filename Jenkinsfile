@@ -38,13 +38,17 @@ pipeline {
                 echo "Deploy application to production AWS EC2 instance using AWS CLI"
             }
         }
-        stage('Completed Build Email') {
-            steps {
-                script {
-                    def lastStageName = currentBuild.rawBuild.stages.last().stageName
-                    def stageStatus = currentBuild.currentResult ?: 'SUCCESS'
-                    mail bcc: '', body: "Hello,\n\nThis is an email from Jenkins pipeline. The last stage '${lastStageName}' had a status of ${stageStatus}.\n\nRegards,\nJenkins", cc: '', from: '', replyTo: '', subject: 'EmailJenkinsPipeline', to: 'arr8ws@gmail.com'
-                }
+        post {
+            always {
+                archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
+                
+                echo 'I will always say Hello again!'
+                    
+                emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                
             }
         }
     }
