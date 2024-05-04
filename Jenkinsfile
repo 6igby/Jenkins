@@ -45,14 +45,28 @@ pipeline {
         }
     }
         post {
-            always {
-            archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
-
-            mail bcc: emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                recipientProviders: [developers(), requestor()],
-                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                to: 'arr8ws@gmail.com'
+            success {
+                sendEmailNotification('Success', currentBuild)
+            }
+            failure {
+                sendEmailNotification('Failure', currentBuild)
         }
     }
+}
+
+def sendEmailNotification(status, currentBuild) {
+    def logs = currentBuild.rawBuild.getLog(1000)
+
+    def emailSubject = "Security Scan ${status}"
+    def emailBody = "The Security Scan has ${status}.\n"
+    def toEmail = "arr8ws@gmail.com"
+
+    emailext (
+        subject: emailSubject,
+        body: emailBody,
+        to: toEmail,
+        attachmentsPattern: '*.log',
+        mimeType: 'text/plain',
+        attachLog: true
+    )
 }
