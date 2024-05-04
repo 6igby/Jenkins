@@ -13,7 +13,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Build stage"
-                    mail bcc: '', body: "Build stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Build Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Build stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Build Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Unit and Integration Tests stage"
-                    mail bcc: '', body: "Unit and Integration Tests stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Unit and Integration Tests Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Unit and Integration Tests stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Unit and Integration Tests Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Code Analysis stage"
-                    mail bcc: '', body: "Code Analysis stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Code Analysis Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Code Analysis stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Code Analysis Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Security Scan stage"
-                    mail bcc: '', body: "Security Scan stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Security Scan Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Security Scan stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Security Scan Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
@@ -57,7 +57,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Deploy to Staging stage"
-                    mail bcc: '', body: "Deploy to Staging stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Deploy to Staging Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Deploy to Staging stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Deploy to Staging Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
@@ -68,7 +68,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Integration Tests on Staging stage"
-                    mail bcc: '', body: "Integration Tests on Staging stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Integration Tests on Staging Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Integration Tests on Staging stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Integration Tests on Staging Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
@@ -79,7 +79,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Deploy to Production stage"
-                    mail bcc: '', body: "Deploy to Production stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Deploy to Production Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
+                    mail bcc: '', body: "Deploy to Production stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Deploy to Production Stage Complete', to: env.EMAIL_RECIPIENTS, attachLog: true
                 }
             }
         }
