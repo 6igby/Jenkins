@@ -6,7 +6,7 @@ pipeline{
         PRODUCTION_ENVIRONMENT = "Digby"
     }
     stages{
-        stage('Build'){
+        stage('Building'){
             steps{
                 echo "Fetch the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
                 echo "Compile the code and generate any necessary artifacts"
