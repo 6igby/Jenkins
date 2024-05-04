@@ -37,7 +37,6 @@ pipeline {
             steps {
                 echo "Deploy application to production AWS EC2 instance using AWS CLI"
             }
-        }
         post {
             success {
                 emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Succeeded",
@@ -50,6 +49,7 @@ pipeline {
                         body: 'Build has failed.',
                         to: 'arr8ws@gmail.com',
                         attachLog: true
+                }
             }
         }
     }
