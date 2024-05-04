@@ -79,7 +79,7 @@ pipeline {
             post {
                 always {
                     echo "Sending email notification for Deploy to Production stage"
-                    mail bcc: '', body: "Deploy to Production stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Deploy to Production Stage Complete', to: env.EMAIL
+                    mail bcc: '', body: "Deploy to Production stage: ${currentBuild.result}\n\nLogs attached.", cc: '', from: '', replyTo: '', subject: 'Deploy to Production Stage Complete', to: env.EMAIL_RECIPIENTS, attachments: buildLog()
                 }
             }
         }
