@@ -12,7 +12,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Build Stage Complete",
                     body: "Build stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
@@ -25,7 +25,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Unit and Integration Tests Stage Complete",
                     body: "Unit and Integration Tests stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
@@ -38,7 +38,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Code Analysis Stage Complete",
                     body: "Code Analysis stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
@@ -51,7 +51,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Security Scan Stage Complete",
                     body: "Security Scan stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
@@ -64,7 +64,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Deploy to Staging Stage Complete",
                     body: "Deploy to Staging stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
@@ -77,7 +77,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Integration Tests on Staging Stage Complete",
                     body: "Integration Tests on Staging stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
@@ -90,7 +90,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: arr8ws@gmail.com,
+                    to: env.EMAIL_RECIPIENTS,
                     subject: "Deploy to Production Stage Complete",
                     body: "Deploy to Production stage: ${currentBuild.result}\n\nLogs attached.",
                     attachLog: true
