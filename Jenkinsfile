@@ -20,6 +20,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Perform security scan using OWASP ZAP"
+                mail bcc: '', body: 'The Security Scan has been Succsessfully Completed.', cc: '', from: '', replyTo: '', subject: 'Security Test Complete', to: 'arr8ws@gmail.com'
             }
         }
         stage('Deploy to Staging') {
