@@ -3,7 +3,7 @@ pipeline{
     environment {
         DIRECTORY_PATH = "http://localhost:8083/job/5.1P_task/"
         TESTING_ENVIRONMENT = "5.1P_environment"
-        PRODUCTION_ENVIRONMENT = "Dig"
+        PRODUCTION_ENVIRONMENT = "Digby"
     }
     stages{
         stage('Building'){
