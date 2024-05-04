@@ -46,13 +46,13 @@ pipeline {
     }
         post {
             always {
-                archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
-                        
-                emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
-                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                    recipientProviders: [developers(), requestor()],
-                    subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                    
+            archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
+
+            emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                recipientProviders: [developers(), requestor()],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                to: 'arr8ws@gmail.com'
         }
     }
 }
