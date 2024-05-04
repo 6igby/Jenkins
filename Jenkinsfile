@@ -2,11 +2,6 @@ pipeline {
     agent any
     
     stages {
-        stage('Email Jenkins Pipeline') {
-            steps{
-                mail bcc: '', body: 'Jenkins pipelin', cc: '', from: '', replyTo: '', subject: '', to: 'digby.hr@gmail.com'
-            }
-        }
         stage('Build') {
             steps {
                 echo "Perform code compilation and packaging with Maven"
@@ -15,6 +10,16 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo "Run unit tests and integration tests using JUnit and TestNG"
+            }
+            post {
+                success {
+                    email notifyBody: 'Test stage succeeded', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    attachLog('test-logs.log')
+                }
+                failure {
+                    email notifyBody: 'Test stage failed', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    attachLog('test-logs.log')
+                }
             }
         }
         stage('Code Analysis') {
@@ -25,6 +30,16 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Perform security scan using OWASP ZAP"
+            }
+            post {
+                success {
+                    email notifyBody: 'Security scan stage succeeded', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    attachLog('security-scan-logs.log')
+                }
+                failure {
+                    email notifyBody: 'Security scan stage failed', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    attachLog('security-scan-logs.log')
+                }
             }
         }
         stage('Deploy to Staging') {
@@ -43,4 +58,13 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            email notifyBody: 'Pipeline completed', recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+        }
+    }
+}
+
+def attachLog(logFile) {
+    emailext attachLog: true, logFile: logFile
 }
