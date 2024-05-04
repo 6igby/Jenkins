@@ -1,10 +1,6 @@
 pipeline {
     agent any
-
-    environment {
-        EMAIL_RECIPIENTS = 'arr8ws@gmail.com'
-    }
-
+    
     stages {
         stage('Build') {
             steps {
@@ -24,11 +20,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Perform security scan using OWASP ZAP"
-            }
-            post {
-                always {
-                    mail to: 'arr8ws@gmail.com', subject: 'Build status', attachLog: ['path/to/logfile1.log', 'path/to/logfile2.log']
-                }
+                mail bcc: '', body: 'The Security Scan has been Succsessfully Completed.', cc: '', from: '', replyTo: '', subject: 'Security Test Complete', to: 'arr8ws@gmail.com'
             }
         }
         stage('Deploy to Staging') {
@@ -43,12 +35,21 @@ pipeline {
         }
         stage('Deploy to Production') {
             steps {
-                echo "Deploy application to AWS EC2 instance using AWS CLI"
+                echo "Deploy application to production AWS EC2 instance using AWS CLI"
             }
-            post {
-                always {
-                    mail to: 'arr8ws@gmail.com', subject: 'Build status', attachLog: ['path/to/logfile1.log', 'path/to/logfile2.log']
-                }
+        }
+        post {
+            success {
+                emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Succeeded",
+                        body: 'Build was successful.',
+                        to: 'arr8ws@gmail.com',
+                        attachLog: true
+            }
+            failure {
+                emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
+                        body: 'Build has failed.',
+                        to: 'arr8ws@gmail.com',
+                        attachLog: true
             }
         }
     }
