@@ -40,8 +40,14 @@ pipeline {
         }
         stage('Completed Build Email') {
             steps {
-                mail bcc: '', body: 'Hello, This is an email from jenkins pipeline.', cc: '', from: '', replyTo: '', subject: 'EmailJenkinsPipeline', to: 'arr8ws@gmail.com'
+                script {
+                    def stageStatus = currentBuild.result ?: 'SUCCESS'
+                    if (currentBuild.currentResult == 'FAILURE') {
+                        stageStatus = 'FAILURE'
+                    }
+                    mail bcc: '', body: "Hello,\n\nThis is an email from Jenkins pipeline. The last stage '${stageName}' had a status of ${stageStatus}.\n\nRegards,\nJenkins", cc: '', from: '', replyTo: '', subject: 'EmailJenkinsPipeline', to: 'arr8ws@gmail.com'
+                }
             }
-        }        
+        }
     }
 }
