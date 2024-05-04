@@ -61,8 +61,6 @@ def sendEmailNotification(status, result, logs) {
 
     emailext (
         subject: emailSubject,
-        body: emailBody,
-        to: toEmail,
         mimeType: 'text/plain',
         attachLog: true,
         attachments: "*.log",
