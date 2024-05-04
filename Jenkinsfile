@@ -20,7 +20,8 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Perform security scan using OWASP ZAP"
-                mail bcc: '', body: 'The Security Scan has been Succsessfully Completed.', cc: '', from: '', replyTo: '', subject: 'Security Test Complete', to: 'arr8ws@gmail.com'
+                archiveArtifacts artifacts: 'logs/**/*.log', onlyIfSuccessful: true
+                mail bcc: '', body: 'The Security Scan has been Succsessfully Completed.', cc: '', from: '', replyTo: '', subject: 'Security Test Complete', to: 'arr8ws@gmail.com', attachmentsPattern: 'logs/**/*.log'
             }
         }
         stage('Deploy to Staging') {
@@ -47,8 +48,6 @@ pipeline {
         post {
             always {
                 archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
-                    
-                echo 'I will always say Hello again!'
                         
                 emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
                     body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
