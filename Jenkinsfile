@@ -54,9 +54,7 @@ pipeline {
     }
 }
 
-def sendEmailNotification(status, currentBuild) {
-    def logs = currentBuild.rawBuild.getLog(1000)
-
+def sendEmailNotification(status, result, logs) {
     def emailSubject = "Security Scan ${status}"
     def emailBody = "The Security Scan has ${status}.\n"
     def toEmail = "arr8ws@gmail.com"
@@ -65,8 +63,10 @@ def sendEmailNotification(status, currentBuild) {
         subject: emailSubject,
         body: emailBody,
         to: toEmail,
-        attachmentsPattern: '*.log',
         mimeType: 'text/plain',
-        attachLog: true
+        attachLog: true,
+        attachments: "*.log",
+        body: emailBody,
+        recipientProviders: [[$class: 'RequesterRecipientProvider']]
     )
 }
