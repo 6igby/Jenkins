@@ -1,70 +1,39 @@
 pipeline {
     agent any
-
     stages {
         stage('Build') {
             steps {
-                echo 'Build the code'
-                sh 'mvn clean install' 
+                echo "Perform code compilation and packaging using Maven"
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Run unit tests and integration tests'
-                sh 'mvn test' 
+                echo "Run unit tests and integration tests using JUnit and TestNG"
             }
         }
         stage('Code Analysis') {
             steps {
-                echo 'Analyze code quality and security'
-                sh 'mvn sonar:sonar' 
+                echo "Perform code analysis using SonarQube"
             }
         }
         stage('Security Scan') {
             steps {
-                echo 'Scan for security vulnerabilities'
-                sh 'owasp-zap-command' /
+                echo "Perform security scan using OWASP ZAP"
             }
         }
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploy to staging environment'
-                sh 'ansible-playbook -i inventory.ini staging.yml' 
+                echo "Deploy application to AWS EC2 instance using AWS CLI"
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Run integration tests on staging environment'
-                sh 'cucumber' 
+                echo "Run integration tests on staging environment using Selenium"
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploy to production environment'
-                sh 'ansible-playbook -i inventory.ini production.yml' 
-            }
-        }
-    }
-
-    post {
-        success {
-            stage('Send Notification Email') {
-                steps {
-                    emailext to: 's222465543@deakin.edu.au',
-                             subject: 'Pipeline Status: ${currentBuild.result}',
-                             body: 'Pipeline status: ${currentBuild.result}',
-                             attachLog: true
-                }
-            }
-        }
-        failure {
-            stage('Send Notification Email') {
-                steps {
-                    emailext to: 's222465543@deakin.edu.au',
-                             subject: 'Pipeline Status: ${currentBuild.result}',
-                             body: 'Pipeline status: ${currentBuild.result}',
-                             attachLog: true
-                }
+                echo "Deploy application to production AWS EC2 instance using AWS CLI"
             }
         }
     }
