@@ -41,39 +41,17 @@ pipeline {
         }
     }
     post {
-            success {
-                script {
-                    def powershellCommand  """
-                    \$SMTPServer = "smtp.gmail.com"
-                    \$SMTPFrom = "arr8ws@gmail.com"
-                    \$SMTPTo = "arr8ws@gmail.com"
-                    \$SMTPSubject = "Succsessful Execusion of Build..."
-                    \$SMTPBody = "This build has been succsessful!"
-                    \$SMTPUsername = "arr8ws@gmail.com"
-                    \$SMTPPassword = "urca ldxr awox kyzo"
-                    Send-MailMessage -From \$SMTPFROM -to \$SMTPTo -Subject \$SMTPSubject -Body \$SMTPBody -SmtpServer \$SMTPServer
-                    """
-                    powershell(powershellCommand)
-                }
-
-                echo 'Succsess'
-            }
-            failure {
-                script{
-                    def powershellCommand  """
-                    \$SMTPServer = "smtp.gmail.com"
-                    \$SMTPFrom = "arr8ws@gmail.com"
-                    \$SMTPTo = "arr8ws@gmail.com"
-                    \$SMTPSubject = "Succsessful Execusion of Build..."
-                    \$SMTPBody = "This build has been succsessful!"
-                    \$SMTPUsername = "arr8ws@gmail.com"
-                    \$SMTPPassword = "urca ldxr awox kyzo"
-                    Send-MailMessage -From \$SMTPFROM -to \$SMTPTo -Subject \$SMTPSubject -Body \$SMTPBody -SmtpServer \$SMTPServer
-                    """
-                    powershell(powershellCommand)
-                }
-
-                echo 'Failed'
-            }
+        success {
+            mail to: 'arr8ws@gmail.com',
+                 subject: 'Succsessful Execution of Build...',
+                 body: 'This build has been successful!'
+            echo 'Success'
+        }
+        failure {
+            mail to: 'arr8ws@gmail.com',
+                 subject: 'Failed Execution of Build...',
+                 body: 'This build has failed. Please check the logs.'
+            echo 'Failed'
+        }
     }
 }
