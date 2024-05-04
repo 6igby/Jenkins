@@ -43,13 +43,13 @@ pipeline {
         success {
             mail to: 'arr8ws@gmail.com',
                  subject: 'Succsessful Execution of Build...',
-                 body: 'This build has been successful!'
+                 body: 'This build has been successful! Logs have been attached for more info.'
             echo 'Success'
         }
         failure {
             mail to: 'arr8ws@gmail.com',
                  subject: 'Failed Execution of Build...',
-                 body: 'This build has failed. Please check the logs.'
+                 body: 'This build has failed. Logs have been attached for more info.'
             echo 'Failed'
         }
     }
